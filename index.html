@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore Malaysian Street Food</title>
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="index/cookie.css"> <!-- ✅ Added: cookie CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    section {
+      font-size: 20px;
+    }
+
+    /* Headings */
+    section h2 {
+      color: #b22222;
+      text-align: center;
+      border-bottom: 2px solid #ddd;
+    }
+
+    /* Paragraphs & text */
+    section p {
+      margin-bottom: 15px;
+    }
+
+    /* Container for the 3 items */
+    section ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0 auto;
+      list-style: none;
+    }
+
+    /* Individual item */
+    section ul li {
+      flex: 1 1 250px;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    section a {
+      font-size: 30px;
+      text-decoration: none;
+      color: black;
+    }
+
+    section a:hover {
+      text-decoration: underline;
+      color: blue;
+    }
+
+    .food-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      text-align: center;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      width: 100%;
+      margin: 0 auto;
+      height: auto;
+    }
+
+    @media (max-width: 900px) {
+      .food-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .food-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card-food {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-food {
+      transform: rotateY(180deg);
+    }
+
+    .card-food-front,
+    .card-food-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card-food-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-food-back {
+      background-color: rgb(247, 186, 2);
+      color: white;
+      transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .card-food-back p {
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 1024px) {
+      .card-food-back p {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card-food-back p {
+        font-size: 15px;
+      }
+    }
+
+    .card h2 {
+      margin-top: 10px;
+      font-size: 18px;
+      background-color: burlywood;
+      border-radius: 10px;
+      padding: 5px 0;
+    }
+
+    .social-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .fb-page {
+      display: block;
+      margin: 20px auto;
+      max-width: 900px;
+      height: 700px !important;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+   <div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="about/about.html">About</a>
+    <a href="topdishes/topdishes.html">Top Dishes</a>
+    <a href="gallery/gallery.html">Gallery</a>
+    <a href="recipe/recipe.html">Recipe</a>
+    <a href="location/location.html">Location</a>
+    <a href="quiz/quiz.html">Quiz</a>
+    <a href="contact/contact.html">Contact</a>
+    <a href="event/event.html">Event</a>
+    <a href="faqs/faqs.html">FAQs</a>
+
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ========== Hero Section ========== -->
+  <section style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('index/MalaysiaFlag.jpg') center/cover no-repeat;
+    padding: 110px 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    margin-bottom: 10px;">
+    <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Explore Malaysian Street Food</h1>
+    <p style="font-size: 1.2rem; margin-bottom: 18px;">Discover the flavors of every corner of Malaysia</p>
+    <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffcc00; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">
+      Taste the Best Street Food from Every State in Malaysia
+    </h2>
+    <p style="font-size: 1.2rem;">Uncover Malaysia’s iconic street food across every region</p>
+  </section>
+
+  <div class="food-gallery">
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/charkwayteow.webp" alt="Char Kway Teow">
+        </div>
+        <div class="card-food-back">
+          <p>Stir-fried flat noodles with prawns, cockles, eggs, and bean sprouts in a rich soy sauce mix.</p>
+        </div>
+      </div>
+      <h2>Char Kway Teow</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/nasilemak.jpeg" alt="Nasi Lemak">
+        </div>
+        <div class="card-food-back">
+          <p>Has a rich, creamy, and aromatic flavor from the coconut milk-infused rice, balanced by the
+            sweet, spicy, and slightly tangy taste of sambal.</p>
+        </div>
+      </div>
+      <h2>Nasi Lemak</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/asamlaksa.jpg" alt="Asam Laksa">
+        </div>
+        <div class="card-food-back">
+          <p>A popular Malaysian noodle soup with a tangy, spicy, and slightly sweet flavor.</p>
+        </div>
+      </div>
+      <h2>Asam Laksa</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/satay.avif" alt="Satay">
+        </div>
+        <div class="card-food-back">
+          <p>Has a smoky, savory, and slightly sweet flavor from marinated, skewered meat grilled over charcoal.
+            The meat is tender and aromatic, often with hints of turmeric, lemongrass, and other spices from the
+            marinade.</p>
+        </div>
+      </div>
+      <h2>Satay</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/bakkutteh.webp" alt="Bak Kut Teh">
+        </div>
+        <div class="card-food-back">
+          <p>Originated from Chinese immigrants in Malaysia, particularly in Klang, Selangor, which is
+            often regarded as its birthplace. It has a deep, savory, and aromatic flavor from slow-simmered pork ribs
+            cooked in a fragrant
+            herbal broth.</p>
+        </div>
+      </div>
+      <h2>Bak Kut Teh</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/roticanai.webp" alt="Roti Canai">
+        </div>
+        <div class="card-food-back">
+          <p>A popular Malaysian flatbread that’s crispy on the outside and soft, flaky inside. It has a buttery,
+            slightly salty, and lightly sweet dough</p>
+        </div>
+      </div>
+      <h2>Roti Canai</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/ramlyburger.jpg" alt="Ramly Burger">
+        </div>
+        <div class="card-food-back">
+          <p>A famous Malaysian street food burger made with a seasoned beef or chicken patty, often wrapped in an
+            omelette. It’s cooked with sauces like mayonnaise, chili, and ketchup, and served in a soft bun with
+            lettuce and onions for a rich, messy, and flavorful bite.</p>
+        </div>
+      </div>
+      <h2>Ramly Burger</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/rojak.jpg" alt="Fruit Rojak">
+        </div>
+        <div class="card-food-back">
+          <p>A Malaysian mixed fruit and vegetable salad tossed in a thick, sweet, and tangy shrimp paste.</p>
+        </div>
+      </div>
+      <h2>Fruit Rojak</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/cendol.jpg" alt="Cendol">
+        </div>
+        <div class="card-food-back">
+          <p>Cendol is a refreshing Malaysian dessert made of shaved ice topped with coconut milk, palm sugar syrup,
+            and green rice flour jelly noodles.
+            It’s sweet, creamy, and slightly nutty, perfect for cooling down on a hot day.</p>
+        </div>
+      </div>
+      <h2>Cendol</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/otakotak.jpg" alt="Otak-otak">
+        </div>
+        <div class="card-food-back">
+          <p>A Malaysian snack made from spiced fish paste mixed with coconut milk, wrapped in banana leaves, and
+            grilled or steamed.</p>
+        </div>
+      </div>
+      <h2>Otak-otak</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/meegoreng.webp" alt="Mee Goreng">
+        </div>
+        <div class="card-food-back">
+          <p>A flavorful Malaysian fried noodle dish, often cooked with yellow noodles, tofu, potatoes, vegetables,
+            and sometimes seafood or chicken.</p>
+        </div>
+      </div>
+      <h2>Mee Goreng</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-food">
+        <div class="card-food-front">
+          <img src="index/foodstore/apambalik.jpg" alt="Apam Balik">
+        </div>
+        <div class="card-food-back">
+          <p>Chinese-style apam balik is a soft, thick, and fluffy pancake filled with crushed peanuts, sugar, and
+            sweet corn.<br>
+            Malay-style apam balik is a thin, crispy pancake folded in half, filled with crushed peanuts, sugar, and
+            sometimes sweet corn or grated coconut.</p>
+        </div>
+      </div>
+      <h2>Apam Balik</h2>
+    </div>
+
+  </div>
+
+
+  <br><br>
+
+  <script src="whole.js"></script>
+
+  <br>
+  <section>
+    <h2>Why Explore With Us?</h2>
+    <ul style="text-align: center;">
+      <li><strong>By Location:</strong> Easily find food based on state or city.</li>
+      <li><strong>By Type:</strong> Browse by categories – noodles, desserts, drinks and more.</li>
+      <li><strong>Top Picks:</strong> See what’s trending and most loved by Malaysians.</li>
+    </ul>
+
+    <br><br>
+    <!-- ================= SOCIAL MEDIA ================= -->
+    <h2 style="margin-left:10px;">Follow Us on Facebook</h2>
+  </section>
+
+  <div class="social-box">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
+    <div class="fb-page"
+      data-href="https://www.facebook.com/profile.php?id=61579711203968"
+      data-tabs="timeline"
+      data-width="900" data-height="700"
+      data-small-header="false" data-adapt-container-width="true"
+      data-hide-cover="false" data-show-facepile="true">
+    </div>
+  </div>
+
+  <br><br>
+
+  <section style="text-align:center;">
+    <h2>📧 Email Us</h2>
+    <p style="font-size:30px; color: black">Email: <a href="mailto:streetfoodmls@gmail.com"><b>streetfoodmls@gmail.com</b></a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Explore Malaysian Street Food. All rights reserved.</p>
+  </footer>
+
+  <!-- ========== Cookie Popup ========== -->
+  <div class="cookie-popup" id="cookiePopup">
+    <h3>🍪 Cookie Consent</h3>
+    <p>We use cookies to improve your experience. Accept or Reject below.</p>
+    <div class="cookie-buttons">
+      <button class="cookie-accept" id="acceptBtn">Accept</button>
+      <button class="cookie-reject" id="rejectBtn">Reject</button>
+    </div>
+  </div>
+
+  <script>
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var d = new Date();
+        d.setTime(d.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + d.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      var cname = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(cname) == 0) return c.substring(cname.length, c.length);
+      }
+      return "";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var popup = document.getElementById("cookiePopup");
+      var acceptBtn = document.getElementById("acceptBtn");
+      var rejectBtn = document.getElementById("rejectBtn");
+
+      if (!getCookie("cookieConsent") && !localStorage.getItem("cookieConsent")) {
+        popup.style.display = "flex";
+      }
+
+      acceptBtn.onclick = function () {
+        setCookie("cookieConsent", "accepted", 180);
+        localStorage.setItem("cookieConsent", "accepted");
+        sessionStorage.setItem("visit", "first"); // demo sessionStorage
+        popup.style.display = "none";
+      };
+
+      rejectBtn.onclick = function () {
+        setCookie("cookieConsent", "rejected", 180);
+        localStorage.setItem("cookieConsent", "rejected");
+        sessionStorage.setItem("visit", "first");
+        popup.style.display = "none";
+      };
+    });
+  </script>
+
+  <script src="whole.js"></script>
+</body>
+</html>
